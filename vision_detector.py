@@ -1,84 +1,28 @@
-import cv2
 import pytesseract
-from classifier import detect_multiple
+import cv2
+import numpy as np
 
-# Tell pytesseract where tesseract is
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
-def extract_text(image_path):
+def extract_text(image):
 
-    img = cv2.imread(image_path)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    if img is None:
-        print("Error: Image not found")
-        return []
+    gray = cv2.convertScaleAbs(gray, alpha=1.8, beta=0)
 
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (3, 3), 0)
 
-    text = pytesseract.image_to_string(gray)
+    _, thresh = cv2.threshold(gray, 120, 255, cv2.THRESH_BINARY)
 
-    lines = [line.strip() for line in text.split("\n") if line.strip()]
+    resized = cv2.resize(
+        thresh,
+        None,
+        fx=2,
+        fy=2,
+        interpolation=cv2.INTER_CUBIC
+    )
 
-    return lines
+    text = pytesseract.image_to_string(resized)
 
-
-if __name__ == "__main__":
-
-    extracted_lines = extract_text("test.png")
-
-    print("\nExtracted Text:")
-    print("----------------")
-
-    for line in extracted_lines:
-        print(line)
-
-
-    print("\nDark Pattern Detection:")
-    print("------------------------")
-
-    results = detect_multiple(extracted_lines)
-
-    dark_count = 0
-    confidence_total = 0
-
-
-    for r in results:
-
-        print(f"\nText: {r['text']}")
-
-        for pattern in r["patterns"]:
-
-            print(
-                f"Detected: {pattern['pattern']} "
-                f"(Confidence: {round(pattern['confidence'],2)})"
-            )
-
-            if pattern["confidence"] > 0.45:
-                dark_count += 1
-                confidence_total += pattern["confidence"]
-
-
-    # -----------------------------
-    # Risk Score Calculation
-    # -----------------------------
-
-    if dark_count > 0:
-        avg_conf = confidence_total / dark_count
-        risk_score = round(avg_conf * 100)
-    else:
-        risk_score = 0
-
-
-    if risk_score < 30:
-        severity = "LOW RISK 🟢"
-    elif risk_score < 60:
-        severity = "MEDIUM RISK 🟡"
-    else:
-        severity = "HIGH RISK 🔴"
-
-
-    print("\n------------------------")
-    print(f"Dark Patterns Found: {dark_count}")
-    print(f"Risk Score: {risk_score}/100")
-    print(f"Severity Level: {severity}")
+    return text
