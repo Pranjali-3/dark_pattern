@@ -1,67 +1,9 @@
-# 🛑 Dark Pattern AI
+Dark Pattern AI is a real-time intelligent system designed to detect, analyze, and expose manipulative user interface patterns that subtly influence user decisions in digital environments. In today’s online ecosystem, many platforms employ deceptive design strategies—commonly known as dark patterns—to create a false sense of urgency, hide critical information, or guide users toward unintended actions such as unnecessary purchases or subscriptions. These patterns often go unnoticed, leading to poor user experiences and a lack of transparency.
 
-Real-Time Detection of Manipulative UI Patterns using AI
+Dark Pattern AI addresses this problem by continuously capturing and analyzing on-screen content in real time. Using a combination of computer vision, optical character recognition (OCR), and natural language processing (NLP), the system identifies suspicious UI elements and textual cues associated with manipulation. It detects patterns such as false scarcity ("Only 2 items left"), misleading discounts, hidden costs, forced continuity, and confusing interface structures designed to mislead users.
 
-## 🚀 Overview
+The system then evaluates these findings and generates a comprehensive risk score (0–100) along with a severity classification, providing users with an immediate understanding of how manipulative a particular interface might be. This allows individuals to make more informed decisions while interacting with websites and applications.
 
-Dark Pattern AI automatically **captures the screen in real-time** and detects **manipulative UI patterns** like:
+Beyond detection, Dark Pattern AI aims to create awareness around unethical design practices and promote ethical, user-centric digital experiences. By making invisible manipulations visible, it empowers users, encourages accountability among developers and businesses, and contributes toward building a more transparent and trustworthy internet.
 
-* False urgency ("Only 2 left")
-* Fake offers
-* Hidden subscriptions
-* Sneaky pricing
-
-It then generates a **Risk Score (0–100)** and **Severity Level**.
-
----
-
-## ⚙️ Tech Stack
-
-* Python
-* Streamlit
-* OpenCV
-* Tesseract OCR
-* MSS (Real-time screen capture)
-* NLP / Regex
-
----
-
-## 📂 Files
-
-```
-app.py
-main_brain.py
-ui_detector.py
-vision_detector.py
-```
-
----
-
-## ▶️ Run Project
-
-Install dependencies:
-
-```
-pip install streamlit opencv-python numpy pillow pytesseract mss
-```
-
-Run:
-
-```
-streamlit run app.py
-```
-
----
-
-## 🎯 Features
-
-✅ Real-time screen detection
-✅ AI-based dark pattern detection
-✅ Risk score system
-✅ Works on any website
-
----
-
-## 🏆 Built For
-
-AI Hackathon — 36 Hour Challenge
+Designed as a scalable and practical solution, the system can be extended to browser integrations, enterprise tools, and consumer protection platforms, making it relevant across multiple domains including e-commerce, fintech, and online services.
